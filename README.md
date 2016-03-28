@@ -4,3 +4,5 @@
 [![Build Status](https://travis-ci.org/kezhuw/neterrs.svg?branch=master)](https://travis-ci.org/kezhuw/neterrs)
 
 Simple Go package to extract errors that `net` package not exported.
+
+Go 1.0 is not supported.
