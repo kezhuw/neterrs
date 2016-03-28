@@ -41,6 +41,7 @@ func triggerErrClosed(conn *net.TCPConn) error {
 	default:
 		panic(err)
 	}
+	return nil
 }
 
 func makeErrClosed() error {
@@ -57,10 +58,8 @@ func makeErrClosed() error {
 // IsClosed returns a boolean indicating whether the error is caused by
 // closed connection.
 func IsClosed(err error) bool {
-	switch err := err.(type) {
-	case *net.OpError:
-		return err.Err == ErrClosed
-	default:
-		return err == ErrClosed
+	if opErr, ok := err.(*net.OpError); ok {
+		return opErr.Err == ErrClosed
 	}
+	return err == ErrClosed
 }
