@@ -33,10 +33,14 @@ func listenRand() (*net.TCPAddr, chan struct{}) {
 func triggerErrClosed(conn *net.TCPConn) error {
 	var buf [1]byte
 	_, err := conn.Read(buf[:])
-	if opErr, ok := err.(*net.OpError); ok {
-		return opErr.Err
+	switch err := err.(type) {
+	case nil:
+		panic("neterrs: no error after closed")
+	case *net.OpError:
+		return err.Err
+	default:
+		panic(err)
 	}
-	panic("neterrs: unexpected error for reading after closed")
 }
 
 func makeErrClosed() error {
