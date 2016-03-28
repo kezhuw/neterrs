@@ -38,10 +38,8 @@ func triggerErrClosed(conn *net.TCPConn) error {
 		panic("neterrs: no error after closed")
 	case *net.OpError:
 		return err.Err
-	default:
-		panic(err)
 	}
-	return nil
+	return err
 }
 
 func makeErrClosed() error {
