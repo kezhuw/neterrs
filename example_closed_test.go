@@ -3,6 +3,7 @@ package neterrs_test
 import (
 	"fmt"
 	"net"
+	"reflect"
 
 	"github.com/kezhuw/neterrs"
 )
@@ -39,6 +40,10 @@ func ExampleIsClosed_listenerAccept() {
 	l.Close()
 	_, err = l.Accept()
 	fmt.Println(neterrs.IsClosed(err))
+	if !neterrs.IsClosed(err) {
+		fmt.Println(err)
+		fmt.Println(reflect.TypeOf(err))
+	}
 	// Output: true
 }
 
